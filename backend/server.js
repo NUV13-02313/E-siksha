@@ -7,7 +7,7 @@ require('dotenv').config();
 
 const app = express();
 
-const cors = require('cors');
+
 
 // Update CORS configuration
 app.use(cors({
