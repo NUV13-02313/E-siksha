@@ -7,9 +7,19 @@ require('dotenv').config();
 
 const app = express();
 
-// Middleware
-app.use(cors());
-app.use(express.json());
+const cors = require('cors');
+
+// Update CORS configuration
+app.use(cors({
+  origin: [
+    "https://e-siksha.netlify.app", // Your Netlify URL
+    "http://localhost:3000", // Local development
+    "http://localhost:5173" // Vite dev server
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 
 // Debug: Check if environment variables are loaded
