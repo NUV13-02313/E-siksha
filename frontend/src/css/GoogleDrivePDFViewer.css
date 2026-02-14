@@ -1,0 +1,667 @@
+/* ========================================
+   GOOGLE DRIVE PDF VIEWER STYLES
+   ======================================== */
+
+/* Global Variables */
+:root {
+  --primary-color: #4361ee;
+  --secondary-color: #3f37c9;
+  --accent-color: #4895ef;
+  --success-color: #4cc9f0;
+  --dark-color: #1e293b;
+  --light-color: #f8fafc;
+  --gray-color: #64748b;
+  --border-color: #e2e8f0;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
+  --transition: all 0.3s ease;
+  --border-radius: 8px;
+  --border-radius-lg: 12px;
+}
+
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.pdf-viewer-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* Main Wrapper */
+.pdf-viewer-wrapper {
+  display: flex;
+  max-width: 1600px;
+  margin: 0 auto;
+  min-height: calc(100vh - 80px);
+  background: white;
+  box-shadow: var(--shadow-lg);
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+/* ========================================
+   SIDEBAR STYLES
+   ======================================== */
+
+.pdf-sidebar {
+  width: 400px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 30px;
+  overflow-y: auto;
+  position: relative;
+}
+
+/* Back Button */
+.pdf-sidebar .back-btn {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 25px;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pdf-sidebar .back-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateX(-5px);
+}
+
+.pdf-sidebar .back-btn i {
+  font-size: 16px;
+}
+
+/* Sidebar Card */
+.sidebar-card {
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--dark-color);
+  border-radius: var(--border-radius-lg);
+  padding: 25px;
+  box-shadow: var(--shadow-lg);
+}
+
+/* Thumbnail Section */
+.thumbnail-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  border-radius: var(--border-radius-lg);
+  overflow: hidden;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-md);
+  background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
+}
+
+.thumbnail-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: var(--transition);
+}
+
+.thumbnail-container img:hover {
+  transform: scale(1.05);
+}
+
+.placeholder-thumbnail {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.placeholder-thumbnail i {
+  font-size: 64px;
+  opacity: 0.8;
+}
+
+/* Info Section */
+.info-section {
+  margin-bottom: 25px;
+}
+
+.info-section h3 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--dark-color);
+  line-height: 1.4;
+}
+
+.author {
+  font-size: 14px;
+  color: var(--gray-color);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.author i {
+  font-size: 12px;
+}
+
+.description {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #475569;
+  margin-top: 8px;
+}
+
+/* Meta Section */
+.meta-section {
+  margin-bottom: 25px;
+  border-top: 2px solid var(--border-color);
+  padding-top: 20px;
+}
+
+.meta-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 15px;
+  padding: 10px;
+  background: #f8fafc;
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+}
+
+.meta-item:hover {
+  background: #f1f5f9;
+  transform: translateX(5px);
+}
+
+.meta-item i {
+  font-size: 20px;
+  color: var(--primary-color);
+  min-width: 20px;
+  margin-top: 2px;
+}
+
+.meta-label {
+  font-size: 12px;
+  color: var(--gray-color);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.meta-value {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--dark-color);
+  line-height: 1.4;
+}
+
+/* Tags Section */
+.tags-section {
+  margin-bottom: 25px;
+  border-top: 2px solid var(--border-color);
+  padding-top: 20px;
+}
+
+.tags-section .meta-label {
+  display: block;
+  margin-bottom: 12px;
+}
+
+.pdf-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-block;
+  transition: var(--transition);
+}
+
+.tag:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Sidebar Footer - Action Buttons */
+.sidebar-footer {
+  border-top: 2px solid var(--border-color);
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.action-btn {
+  width: 100%;
+  padding: 14px 20px;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: var(--shadow-sm);
+}
+
+.action-btn i {
+  font-size: 16px;
+}
+
+.action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.action-btn:active {
+  transform: translateY(0);
+}
+
+.action-btn.primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.action-btn.primary:hover {
+  background: linear-gradient(135deg, #5568d3 0%, #653ea0 100%);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.action-btn.secondary {
+  background: white;
+  color: var(--dark-color);
+  border: 2px solid var(--border-color);
+}
+
+.action-btn.secondary:hover {
+  background: #f8fafc;
+  border-color: var(--gray-color);
+}
+
+.action-btn.full-screen-btn {
+  background: linear-gradient(135deg, #4cc9f0 0%, #4361ee 100%);
+  color: white;
+}
+
+.action-btn.full-screen-btn:hover {
+  background: linear-gradient(135deg, #3ab0df 0%, #3a56d4 100%);
+  box-shadow: 0 6px 20px rgba(76, 201, 240, 0.4);
+}
+
+/* ========================================
+   MAIN CONTENT - PDF VIEWER
+   ======================================== */
+
+.pdf-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #f8fafc;
+  overflow: hidden;
+}
+
+.pdf-viewer {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* Google Drive Iframe */
+.google-drive-iframe {
+  width: 100%;
+  height: 100%;
+  min-height: calc(100vh - 140px);
+  border: none;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+/* No PDF Available State */
+.no-pdf-available {
+  text-align: center;
+  padding: 60px 20px;
+  max-width: 600px;
+}
+
+.no-pdf-available i {
+  font-size: 80px;
+  color: var(--gray-color);
+  margin-bottom: 20px;
+  opacity: 0.5;
+}
+
+.no-pdf-available h3 {
+  font-size: 28px;
+  color: var(--dark-color);
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+.no-pdf-available p {
+  font-size: 16px;
+  color: var(--gray-color);
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.fallback-buttons {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ========================================
+   LOADING STATE
+   ======================================== */
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 100px);
+  text-align: center;
+  padding: 20px;
+}
+
+.loading-container .spinner {
+  width: 60px;
+  height: 60px;
+  border: 5px solid rgba(102, 126, 234, 0.2);
+  border-top-color: var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+.loading-container p {
+  font-size: 18px;
+  color: var(--gray-color);
+  font-weight: 500;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ========================================
+   ERROR STATE
+   ======================================== */
+
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 100px);
+  text-align: center;
+  padding: 20px;
+  background: white;
+  border-radius: var(--border-radius-lg);
+  margin: 20px;
+  box-shadow: var(--shadow-lg);
+}
+
+.error-container i {
+  font-size: 80px;
+  color: #ef4444;
+  margin-bottom: 20px;
+}
+
+.error-container h3 {
+  font-size: 28px;
+  color: var(--dark-color);
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+.error-container p {
+  font-size: 16px;
+  color: var(--gray-color);
+  margin-bottom: 30px;
+  line-height: 1.6;
+  max-width: 600px;
+}
+
+.error-container .back-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 14px 32px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.error-container .back-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+@media (max-width: 1200px) {
+  .pdf-viewer-wrapper {
+    flex-direction: column;
+  }
+
+  .pdf-sidebar {
+    width: 100%;
+    height: auto;
+    max-height: 500px;
+  }
+
+  .pdf-main {
+    height: calc(100vh - 580px);
+  }
+}
+
+@media (max-width: 768px) {
+  .pdf-viewer-wrapper {
+    border-radius: 0;
+    margin: 0;
+    min-height: 100vh;
+  }
+
+  .pdf-sidebar {
+    padding: 20px;
+    max-height: 450px;
+  }
+
+  .sidebar-card {
+    padding: 20px;
+  }
+
+  .info-section h3 {
+    font-size: 20px;
+  }
+
+  .action-btn {
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+
+  .pdf-main {
+    height: calc(100vh - 530px);
+  }
+
+  .google-drive-iframe {
+    min-height: calc(100vh - 530px);
+  }
+}
+
+@media (max-width: 480px) {
+  .pdf-sidebar {
+    padding: 15px;
+    max-height: 400px;
+  }
+
+  .sidebar-card {
+    padding: 15px;
+  }
+
+  .info-section h3 {
+    font-size: 18px;
+  }
+
+  .author, .description {
+    font-size: 13px;
+  }
+
+  .meta-item {
+    padding: 8px;
+    font-size: 13px;
+  }
+
+  .meta-label {
+    font-size: 11px;
+  }
+
+  .meta-value {
+    font-size: 14px;
+  }
+
+  .tag {
+    padding: 4px 10px;
+    font-size: 11px;
+  }
+
+  .action-btn {
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+
+  .fallback-buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .pdf-main {
+    height: calc(100vh - 480px);
+  }
+
+  .google-drive-iframe {
+    min-height: calc(100vh - 480px);
+  }
+
+  .no-pdf-available {
+    padding: 40px 15px;
+  }
+
+  .no-pdf-available i {
+    font-size: 60px;
+  }
+
+  .no-pdf-available h3 {
+    font-size: 24px;
+  }
+
+  .no-pdf-available p {
+    font-size: 14px;
+  }
+}
+
+/* ========================================
+   PRINT STYLES
+   ======================================== */
+
+@media print {
+  .pdf-sidebar,
+  .sidebar-footer,
+  .navbar,
+  .back-btn {
+    display: none !important;
+  }
+
+  .pdf-viewer-wrapper {
+    display: block !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+  }
+
+  .pdf-main {
+    height: auto !important;
+  }
+
+  .google-drive-iframe {
+    height: auto !important;
+    min-height: auto !important;
+  }
+}
+
+/* ========================================
+   UTILITY CLASSES
+   ======================================== */
+
+.text-center {
+  text-align: center;
+}
+
+.mt-20 {
+  margin-top: 20px;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
+}
+
+.p-20 {
+  padding: 20px;
+}
+
+/* Scrollbar Styling */
+.pdf-sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.pdf-sidebar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.pdf-sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+.pdf-sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
