@@ -17,7 +17,7 @@ const allowedOrigins = [
   'https://e-siksha.netlify.app',  // Your Netlify domain
   'http://localhost:5173',           // Local React dev
   'http://localhost:5000',            // Local backend
-  'https://e-siksha-3tzs.onrender.com' // Your Render backend
+  'https://e-siksha-mljg.onrender.com' // Your Render backend
 ];
 
 app.use(cors({
@@ -37,7 +37,7 @@ app.use(cors({
 }));
 
 // Handle preflight requests
-app.options('*', cors());
+
 
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
