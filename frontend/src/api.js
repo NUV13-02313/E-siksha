@@ -1,7 +1,8 @@
 import axios from 'axios';
-
+// Current (problematic)
 const API_URL = process.env.NODE_ENV === 'production'
-  ? 'https://e-siksha-3tzs.onrender.com'
+const API_URL = process.env.NODE_ENV === 'production'
+  ? 'https://e-siksha-3tzs.onrender.com/api'  // ✅ Add /api here
   : 'http://localhost:5000/api';
 
 // Create axios instance for JSON requests

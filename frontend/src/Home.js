@@ -386,7 +386,7 @@ function Home() {
 
 
       {/* Community Section */}
-      <div className="community-section">
+      <di className="community-section">
         <div className="community-container">
           <div className="community-content">
             <div className="community-badge">
@@ -508,7 +508,7 @@ function Home() {
             </div>
           </div>
         </div>
-      </div>
+      </di>
 
       {/* Why Section */}
       <div className="why-section">

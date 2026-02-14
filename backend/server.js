@@ -11,10 +11,33 @@ require('dotenv').config();
 const app = express();
 
 // ========== MIDDLEWARE ==========
+// Current (problematic) CORS
+// More permissive CORS for debugging
+const allowedOrigins = [
+  'https://e-siksha.netlify.app',  // Your Netlify domain
+  'http://localhost:5173',           // Local React dev
+  'http://localhost:5000',            // Local backend
+  'https://e-siksha-3tzs.onrender.com' // Your Render backend
+];
+
 app.use(cors({
-  origin: ['https://e-siksha.netlify.app', 'http://localhost:5173'],
-  credentials: true
+  origin: function(origin, callback) {
+    // Allow requests with no origin (like mobile apps, curl)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) === -1) {
+      console.log('Blocked origin:', origin);
+      return callback(null, true); // Temporarily allow all origins for debugging
+    }
+    return callback(null, true);
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
+
+// Handle preflight requests
+app.options('*', cors());
 
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
