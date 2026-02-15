@@ -1367,7 +1367,72 @@ app.get('/api/admin/users', authenticateToken, isAdmin, async (req, res) => {
     res.status(500).json({ success: false, message: 'Server error' });
   }
 });
+// Delete Course (Admin only)
+app.delete('/api/admin/course/:id', authenticateToken, isAdmin, async (req, res) => {
+  try {
+    const courseId = req.params.id;
+    
+    // Find and delete course
+    const course = await Course.findById(courseId);
+    
+    if (!course) {
+      return res.status(404).json({
+        success: false,
+        message: 'Course not found'
+      });
+    }
+    
+    // Delete associated enrollments
+    await Enrollment.deleteMany({ course: courseId });
+    
+    // Delete course
+    await Course.findByIdAndDelete(courseId);
+    
+    res.json({
+      success: true,
+      message: 'Course deleted successfully'
+    });
+  } catch (error) {
+    console.error('Delete course error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to delete course',
+      error: error.message
+    });
+  }
+});
 
+// Delete Notes (Admin only)
+app.delete('/api/admin/notes/:id', authenticateToken, isAdmin, async (req, res) => {
+  try {
+    const notesId = req.params.id;
+    
+    // Find and delete notes
+    const notes = await Notes.findById(notesId);
+    
+    if (!notes) {
+      return res.status(404).json({
+        success: false,
+        message: 'Notes not found'
+      });
+    }
+    
+    // Delete notes
+    await Notes.findByIdAndDelete(notesId);
+    
+    res.json({
+      success: true,
+      message: 'Notes deleted successfully'
+    });
+  } catch (error) {
+    console.error('Delete notes error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to delete notes',
+      error: error.message
+    });
+  }
+});
 
 // ========== ERROR HANDLING ==========
 app.use((err, req, res, next) => {
@@ -1400,13 +1465,68 @@ app.use((err, req, res, next) => {
   });
 });
 
-// 404 handler
-app.use('/api', (req, res) => {
-  res.status(404).json({
-    success: false,
-    message: 'API endpoint not found'
-  });
+// Update user status (activate/deactivate)
+app.put('/api/admin/users/:id/status', authenticateToken, isAdmin, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { isActive } = req.body;
+
+    if (typeof isActive !== 'boolean') {
+      return res.status(400).json({
+        success: false,
+        message: 'isActive must be a boolean value'
+      });
+    }
+
+    // Find user
+    const user = await User.findById(id);
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found'
+      });
+    }
+
+    // Prevent deactivating the current admin
+    if (user.role === 'admin' && !isActive && user._id.toString() === req.user.id) {
+      return res.status(400).json({
+        success: false,
+        message: 'Cannot deactivate your own account'
+      });
+    }
+
+    // Update user status
+    user.isActive = isActive;
+    await user.save();
+
+    res.json({
+      success: true,
+      message: `User ${isActive ? 'activated' : 'deactivated'} successfully`,
+      user: {
+        id: user._id,
+        fullName: user.fullName,
+        email: user.email,
+        isActive: user.isActive
+      }
+    });
+  } catch (error) {
+    console.error('Update user status error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Failed to update user status',
+      error: error.message
+    });
+  }
 });
+
+// // 404 handler
+// app.use('/api', (req, res) => {
+//   res.status(404).json({
+//     success: false,
+//     message: 'API endpoint not found'
+//   });
+// });
 
 // ========== START SERVER ==========
 const PORT = process.env.PORT || 5000;

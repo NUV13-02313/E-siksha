@@ -82,7 +82,9 @@ body {
   position: relative;
   animation: fadeInUp 0.8s ease;
 }
-
+.hero p{
+  min-height: 3rem;
+}
 @keyframes fadeInUp {
   from {
     opacity: 0;

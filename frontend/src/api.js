@@ -1,5 +1,4 @@
 import axios from 'axios';
-// Current (problematic)
 
 const API_URL = process.env.NODE_ENV === 'production'
   ? 'https://e-siksha-mljg.onrender.com/api'  // ✅ Add /api here
@@ -237,6 +236,7 @@ export const submitNotes = async (notesData) => {
     throw error;
   }
 };
+
 export const downloadNotes = async (notesId) => {
   try {
     const token = localStorage.getItem('token');
@@ -273,6 +273,7 @@ export const downloadNotes = async (notesId) => {
     throw error;
   }
 };
+
 // 📝 NOTES APIs
 export const getNotes = async (params = {}) => {
   try {
@@ -293,9 +294,6 @@ export const getNote = async (id) => {
     throw error.response?.data || { success: false, message: 'Failed to load note' };
   }
 };
-
-
-
 
 // 👨‍💼 ADMIN APIs
 export const getPendingContent = async () => {
@@ -341,6 +339,64 @@ export const getUsers = async () => {
   }
 };
 
+// Delete content (admin only)
+export const deleteContent = async (type, id, reason = '') => {
+  try {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error('No authentication token found');
+    }
+
+    const response = await fetch(`${API_URL}/admin/${type}/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ reason })
+    });
+
+    const data = await response.json();
+    
+    if (!response.ok) {
+      throw new Error(data.message || `Failed to delete ${type}`);
+    }
+
+    return data;
+  } catch (error) {
+    console.error(`Error deleting ${type}:`, error);
+    throw error;
+  }
+};
+// Update user status (activate/deactivate)
+export const updateUserStatus = async (userId, isActive) => {
+  try {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      throw new Error('No authentication token found');
+    }
+    
+    const response = await fetch(`${API_URL}/admin/users/${userId}/status`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ isActive })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || 'Failed to update user status');
+    }
+
+    return data;
+  } catch (error) {
+    console.error('Error updating user status:', error);
+    throw error;
+  }
+};
 
 
 export { api };
