@@ -32,7 +32,7 @@ body {
   color: var(--white);
   text-align: center;
   padding: 4rem 1.5rem;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
   position: relative;
   overflow: hidden;
 }
@@ -362,6 +362,7 @@ body {
 
 .course-footer {
   display: flex;
+  background: white;
   justify-content: space-between;
   align-items: center;
   padding-top: 1rem;

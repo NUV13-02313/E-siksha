@@ -48,59 +48,58 @@ function Navbar({ showProfile = true }) {
     };
 
     return (
-        <header className="navbar">
-            <div className="nav-left">
-                <div className="logo" onClick={() => navigate('/')}>
+        <header className="es-navbar">
+            <div className="es-nav-left">
+                <div className="es-logo" onClick={() => navigate('/')}>
                     <img src="/img/logo.png" alt="E Siksha Logo" />
                 </div>
-               
             </div>
 
-           
+            {/* Navigation Links - Now in the middle/right */}
+            <nav className="es-nav-links">
+                <button className="es-nav-link" onClick={() => navigate('/')}>
+                    Home
+                </button>
+                <button className="es-nav-link" onClick={() => navigate('/list')}>
+                    Courses
+                </button>
+                <button className="es-nav-link" onClick={() => navigate('/pdf')}>
+                    Notes
+                </button>
+                <button className="es-nav-link" onClick={() => navigate('/about')}>
+                    About
+                </button>
+            </nav>
 
-            <div className="nav-right">
+            <div className="es-nav-right">
                 {showProfile ? (
                     <>
-                    <nav className="nav-links">
-              <button className="nav-link" onClick={() => navigate('/')}>
-                Home
-              </button>
-              <button className="nav-link" onClick={() => navigate('/list')}>
-                Courses
-              </button>
-              <button className="nav-link" onClick={() => navigate('/pdf')}>
-                Notes
-              </button>
-              <button className="nav-link" onClick={() => navigate('/about')}>
-                About
-              </button>
-            </nav>
                         {user ? (
-                            <div className="user-profile" onClick={() => setShowDropdown(!showDropdown)}>
+                            <div className="es-user-profile" onClick={() => setShowDropdown(!showDropdown)}>
                                 {user.avatar ? (
                                     <img 
                                         src={user.avatar} 
                                         alt={user.fullName} 
-                                        className="user-avatar"
+                                        className="es-user-avatar"
                                     />
                                 ) : (
-                                    <div className="avatar-placeholder">
+                                    <div className="es-avatar-placeholder">
                                         {getInitials(user.fullName)}
                                     </div>
                                 )}
-                                <span className="user-name">
+                                <span className="es-user-name">
                                     {user.fullName?.split(' ')[0] || 'User'}
                                 </span>
                                 <i className={`fas fa-chevron-${showDropdown ? 'up' : 'down'}`}></i>
                                 
                                 {showDropdown && (
-                                    <div className="dropdown-menu">
-                                        <div className="dropdown-header">
-                                            <div className="user-info">
+                                    <div className="es-dropdown-menu">
+                                        <div className="es-dropdown-header">
+                                            <div className="es-user-info">
                                                 {user.avatar ? (
                                                     <img src={user.avatar} alt={user.fullName} />
                                                 ) : (
-                                                    <div className="avatar-small">
+                                                    <div className="es-avatar-small">
                                                         {getInitials(user.fullName)}
                                                     </div>
                                                 )}
@@ -111,10 +110,10 @@ function Navbar({ showProfile = true }) {
                                             </div>
                                         </div>
                                         
-                                        <div className="dropdown-divider"></div>
+                                        <div className="es-dropdown-divider"></div>
                                         
                                         <button 
-                                            className="dropdown-item"
+                                            className="es-dropdown-item"
                                             onClick={() => {
                                                 navigateToDashboard();
                                                 setShowDropdown(false);
@@ -125,18 +124,7 @@ function Navbar({ showProfile = true }) {
                                         </button>
                                         
                                         <button 
-                                            className="dropdown-item"
-                                            onClick={() => {
-                                                navigate('/add-content');
-                                                setShowDropdown(false);
-                                            }}
-                                        >
-                                            <i className="fas fa-plus-circle"></i>
-                                            Add Content
-                                        </button>
-                                        
-                                        <button 
-                                            className="dropdown-item"
+                                            className="es-dropdown-item"
                                             onClick={() => {
                                                 navigate('/profile');
                                                 setShowDropdown(false);
@@ -146,10 +134,10 @@ function Navbar({ showProfile = true }) {
                                             Edit Profile
                                         </button>
                                         
-                                        <div className="dropdown-divider"></div>
+                                        <div className="es-dropdown-divider"></div>
                                         
                                         <button 
-                                            className="dropdown-item logout"
+                                            className="es-dropdown-item es-logout"
                                             onClick={handleLogout}
                                         >
                                             <i className="fas fa-sign-out-alt"></i>
@@ -160,9 +148,15 @@ function Navbar({ showProfile = true }) {
                             </div>
                         ) : (
                             <>
-                                
                                 <button 
-                                    className="btn btn-primary"
+                                    className="es-btn es-btn-outline"
+                                    onClick={() => navigate('/login')}
+                                >
+                                    <i className="fas fa-sign-in-alt"></i>
+                                    Login
+                                </button>
+                                <button 
+                                    className="es-btn es-btn-primary"
                                     onClick={() => navigate('/reg')}
                                 >
                                     <i className="fas fa-user-plus"></i>
@@ -173,7 +167,7 @@ function Navbar({ showProfile = true }) {
                     </>
                 ) : (
                     <button 
-                        className="btn btn-primary"
+                        className="es-btn es-btn-primary"
                         onClick={() => navigate('/login')}
                     >
                         Get Started

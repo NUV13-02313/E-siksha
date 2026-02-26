@@ -1,23 +1,23 @@
-import React, { Suspense, lazy } from 'react';
+import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 
-// Lazy load components
-const Home = lazy(() => import('./Home'));
-const Dashboard = lazy(() => import('./Dashboard'));
-const AdminDashboard = lazy(() => import('./AdminDashboard'));
-const AddContent = lazy(() => import('./AddContent'));
-const List = lazy(() => import('./List'));
-const Login = lazy(() => import('./Login'));
-const Registration = lazy(() => import('./Registation'));
-const Pdf = lazy(() => import('./Pdf'));
-const About = lazy(() => import('./About'));
-const CourseDetail = lazy(() => import('./CourseDetail'));
-const BuiltInVideoPlayer = lazy(() => import('./BuiltInVideoPlayer'));
-const GoogleDrivePDFViewer = lazy(() => import('./GoogleDrivePDFViewer'));
+// Direct imports instead of lazy loading
+import Home from './Home';
+import Dashboard from './Dashboard';
+import AdminDashboard from './AdminDashboard';
+import AddContent from './AddContent';
+import List from './List';
+import Login from './Login';
+import Registration from './Registation';
+import Pdf from './Pdf';
+import About from './About';
+import CourseDetail from './CourseDetail';
+import BuiltInVideoPlayer from './BuiltInVideoPlayer';
+import GoogleDrivePDFViewer from './GoogleDrivePDFViewer';
 
-// Loading component
+// Loading component (can be removed or kept for initial load)
 const LoadingFallback = () => (
   <div className="loading-screen">
     <div className="spinner"></div>
@@ -31,7 +31,6 @@ const ProtectedRoute = ({ children }) => {
   const user = localStorage.getItem('user');
   
   if (!token || !user) {
-    // Redirect to login if not authenticated
     return <Navigate to="/login" replace />;
   }
   
@@ -54,7 +53,7 @@ const AdminRoute = ({ children }) => {
   return children;
 };
 
-// Public Route Component (redirects to home if already logged in)
+// Public Route Component
 const PublicRoute = ({ children }) => {
   const token = localStorage.getItem('token');
   const user = localStorage.getItem('user');
@@ -70,72 +69,71 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Suspense fallback={<LoadingFallback />}>
-        <Routes>
-          {/* 🟢 PUBLIC ROUTES - Always accessible */}
-          <Route path='/' element={<Home />} />
-          <Route path='/home' element={<Home />} />
-          <Route path='/list' element={<List />} />
-          <Route path='/pdf' element={<Pdf />} />
-          <Route path='/about' element={<About />} />
-          <Route path='/course/:id' element={<CourseDetail />} />
-          
-          {/* 🟡 AUTH ROUTES - Redirect to home if already logged in */}
-          <Route path='/login' element={
-            <PublicRoute>
-              <Login />
-            </PublicRoute>
-          } />
-          <Route path='/reg' element={
-            <PublicRoute>
-              <Registration />
-            </PublicRoute>
-          } />
+      {/* Suspense removed since we're not lazy loading anymore */}
+      <Routes>
+        {/* PUBLIC ROUTES */}
+        <Route path='/' element={<Home />} />
+        <Route path='/home' element={<Home />} />
+        <Route path='/list' element={<List />} />
+        <Route path='/pdf' element={<Pdf />} />
+        <Route path='/about' element={<About />} />
+        <Route path='/course/:id' element={<CourseDetail />} />
+        
+        {/* AUTH ROUTES */}
+        <Route path='/login' element={
+          <PublicRoute>
+            <Login />
+          </PublicRoute>
+        } />
+        <Route path='/reg' element={
+          <PublicRoute>
+            <Registration />
+          </PublicRoute>
+        } />
 
-          {/* 🔒 PROTECTED ROUTES - Require login */}
-          <Route path='/dashboard' element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          } />
-          
-          <Route path="/add-content/:type?" element={
-            <ProtectedRoute>
-              <AddContent />
-            </ProtectedRoute>
-          } />
-          
-          <Route path='/pdf/viewer/:id' element={
-            <ProtectedRoute>
-              <GoogleDrivePDFViewer />
-            </ProtectedRoute>
-          } />
-          
-          <Route path='/course/:id/learn' element={
-            <ProtectedRoute>
-              <BuiltInVideoPlayer />
-            </ProtectedRoute>
-          } />
+        {/* PROTECTED ROUTES */}
+        <Route path='/dashboard' element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        } />
+        
+        <Route path="/add-content/:type?" element={
+          <ProtectedRoute>
+            <AddContent />
+          </ProtectedRoute>
+        } />
+        
+        <Route path='/pdf/viewer/:id' element={
+          <ProtectedRoute>
+            <GoogleDrivePDFViewer />
+          </ProtectedRoute>
+        } />
+        
+        <Route path='/course/:id/learn' element={
+          <ProtectedRoute>
+            <BuiltInVideoPlayer />
+          </ProtectedRoute>
+        } />
 
-          {/* 🔐 ADMIN ONLY ROUTES */}
-          <Route path='/admin' element={
-            <AdminRoute>
-              <AdminDashboard />
-            </AdminRoute>
-          } />
+        {/* ADMIN ROUTES */}
+        <Route path='/admin' element={
+          <AdminRoute>
+            <AdminDashboard />
+          </AdminRoute>
+        } />
 
-          {/* 404 Page - Catch all unmatched routes */}
-          <Route path='*' element={
-            <div className="not-found-page">
-              <h1>404 - Page Not Found</h1>
-              <p>The page you're looking for doesn't exist.</p>
-              <button onClick={() => window.location.href = '/'}>
-                Go Home
-              </button>
-            </div>
-          } />
-        </Routes>
-      </Suspense>
+        {/* 404 Page */}
+        <Route path='*' element={
+          <div className="not-found-page">
+            <h1>404 - Page Not Found</h1>
+            <p>The page you're looking for doesn't exist.</p>
+            <button onClick={() => window.location.href = '/'}>
+              Go Home
+            </button>
+          </div>
+        } />
+      </Routes>
     </BrowserRouter>
   </React.StrictMode>
 );
